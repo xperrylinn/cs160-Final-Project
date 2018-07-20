@@ -16,7 +16,8 @@ class User(models.Model):
     
 class Home(models.Model):
   address = models.CharField(max_length=50, primary_key=True)
-  price = models.
+  price = models.IntegerField(max_length=20)
+  landlord = models.CharField(max_length=30)
 
     
     
