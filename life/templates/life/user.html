@@ -1,0 +1,156 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>User</title>
+
+		<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{% static '/life/vendor/bootstrap/css/bootstrap.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static '/life/css/main.css' %}" />
+
+		<script src="{% static '/life/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+		<script src="{% static '/life/vendor/jquery-ui/jquery-ui.min.js' %}"></script>
+	</head>
+	<body>
+		<!-- Your layout here -->
+    <div class="container">
+      
+      <!-- Row -->
+      <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+          <!-- Form -->
+           <div class="form-group">
+             <label>Username</label>
+             <input id="username" type="text" class="form-control" placeholder="Username">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Row -->
+      
+      <!-- Row -->
+      <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+          <!-- Form -->
+           <div class="form-group">
+             <label>Password</label>
+             <input id="password" type="password" class="form-control" placeholder="Password">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Row -->
+
+      <!-- Row -->
+      <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+          <!-- Form -->
+           <div class="form-group">
+             <label>Full Name</label>
+             <input id="name" type="text" class="form-control" placeholder="First and last name">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Row -->
+      
+      <!-- Row -->
+      <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+          <!-- Form -->
+           <div class="form-group">
+             <label>Age</label>
+             <input id="age" type="text" class="form-control" placeholder="Age">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Row -->
+      
+      <!-- Row -->
+      <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+          <!-- Form -->
+           <div class="form-group">
+             <label>Hometown</label>
+             <input id="town" type="text" class="form-control" placeholder="City">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Row -->
+      
+      <!-- Row -->
+      <div class = "row">
+        <div class = "col-lg-12">
+            <button id="submit-button" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+      <!-- Row -->
+      
+    </div>
+    <script>
+      $(document).ready(function() {
+        function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = jQuery.trim(cookies[i]);
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        
+        // Function gets the value in a given input box
+        function getData(inputKey) {
+          return $(inputKey).val()
+        }
+        
+      // POSTING BABY POSTING!!!
+        // Collects all the values when I hit submit
+        $("#submit-button").click(function() {
+          var postdata = {
+            'username': getData("#username"),
+            'password': getData("#password"),
+            'name': getData("#name"),
+            'age': getData("#age"),
+            'hometown': getData("#town"),
+            'csrfmiddlewaretoken': csrftoken
+          };
+          
+          $.ajax({
+            url: "../../life/user/",
+            method: "POST",
+            headers: { "X-CSRFToken": csrftoken},
+            data: JSON.stringify(postdata),
+            contentType: "application/json",
+            dataType: "json"
+          });
+        });
+        
+        $.getJSON('../../life/user', function(data) {
+          console.log(data);
+        });
+      });
+    </script>
+	</body>
+</html>
