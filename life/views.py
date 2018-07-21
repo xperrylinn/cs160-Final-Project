@@ -11,7 +11,11 @@ def index(request):
   
 def home(request):
     if request.method == "POST":
-      print(request.body)
+      print(request.body.decode('ASCII'))
+      newHomeData = json.loads(request.body.decode('ASCII')) # Decode bystring to string and convert to ditionary
+      print(newHomeData)
+      newHome = Home(address=newHomeData['address'], price=newHomeData['price'], landlord=newHomeData['landlord'])
+      newHome.save()
       return HttpResponse("")
     else:
       return render(request, 'life/home.html')
