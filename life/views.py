@@ -23,7 +23,4 @@ def user(request):
       User(newUserData['username'], newUserData['password'], newUserData['name'], int(newUserData['age']), newUserData['hometown']).save()
       return HttpResponse("")
     else:
-#       all_users = User.objects.all()
-#       response = serialize("json", all_users)
-#       return HttpResponse(response, content_type="application/json")
       return render(request, 'life/user.html')
