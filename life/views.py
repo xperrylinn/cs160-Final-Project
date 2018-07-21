@@ -12,19 +12,18 @@ def index(request):
 def home(request):
     if request.method == "POST":
       newHomeData = json.loads(request.body.decode('ASCII')) # Decode bystring to string and convert to ditionary
-      newHome = Home(address=newHomeData['address'], price=int(newHomeData['price']), landlord=newHomeData['landlord'])
-      newHome.save()
+      Home(address=newHomeData['address'], price=int(newHomeData['price']), landlord=newHomeData['landlord']).save()
       return HttpResponse("")
     else:
       return render(request, 'life/home.html') 
    
 def user(request):
-  return render(request, 'life/user.html')
-#     if request.method == "POST":
-# #       print(json.loads(request.body))
-#       return HttpResponse("")
-#     else:
-# #       all_users = User.objects.all()
-# #       response = serialize("json", all_users)
-# #       return HttpResponse(response, content_type="application/json")
-#       return render(request, 'life/user.html')
+    if request.method == "POST":
+      newUserData = json.loads(request.body.decode('ASCII'))
+      User(newUserData['username'], newUserData['password'], newUserData['name'], int(newUserData['age']), newUserData['hometown']).save()
+      return HttpResponse("")
+    else:
+#       all_users = User.objects.all()
+#       response = serialize("json", all_users)
+#       return HttpResponse(response, content_type="application/json")
+      return render(request, 'life/user.html')
