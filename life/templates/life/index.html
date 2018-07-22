@@ -39,7 +39,6 @@
         <div class = "col-12">
           <button type="submit" class="btn btn-primary" id="homeButton">Search</button>
           <a href="../../life/home" class="btn btn-outline-dark" role="button" aria-pressed="true">Add Home</a>
-          <a href="../../life/addReview" class="btn btn-outline-dark" role="button" aria-pressed="true">Add Review</a>
         </div>
       </div>
       <!-- Home Button Row -->
@@ -127,6 +126,57 @@
       </div>
       <!-- User Data -->
       <!-- User Search -->
+      
+      <hr>
+ 
+     
+      <!-- Home Reviews -->
+      <div class="row">
+        <h2>
+          Home Review Search
+        </h2>
+        <!-- Column -->
+        <div class="col-12">
+          <!-- Form -->
+           <div class="form-group">
+             <input type="text" class="form-control" placeholder="Enter home address.." id="addressHomeReviewInput">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Header Row and Form -->
+      
+      <!-- Home Review Buttons Row -->
+      <div class = "row">
+        <div class = "col-12">
+          <button type="submit" class="btn btn-primary" id="homeReviewButton">Search</button>
+          <a href="../../life/review" class="btn btn-outline-dark" role="button" aria-pressed="true">Add Review</a>
+        </div>
+      </div>
+      
+    <br>
+
+      <!-- User Data -->
+      <div class='row'>
+        <div class='col-3' id="homeReviewed">
+          <h4>
+            Home
+          </h4>
+        </div>
+        <div class='col-3' id="rating">
+          <h4>
+            Rating
+          </h4>
+        </div>
+        <div class='col-3' id='review'>
+          <h4>
+            Review
+          </h4>
+        </div>
+      </div>
+      <!-- User Data -->
+ 
     <script>
       $(document).ready(function() {
         // Process Home Search
@@ -168,6 +218,32 @@
                 $('#name').append("<p>" + data['name'] + "</p>");
                 $('#age').append("<p>" + data['age'] + "</p>");
                 $('#hometown').append("<p>" + data['hometown'] + "</p>");
+              }
+            }
+          });
+        });
+        // Procerss Home Review Search
+        $("#homeReviewButton").click(function() {
+          var homeReviewAddress = $("#addressHomeReviewInput").val();
+          $.ajax({
+            url: '../../life/searchHomeReviewQuery/',
+            data: {
+            'address': homeReviewAddress
+            },
+            dataType: 'json',
+            success: function(data) {
+              if (data['success'] == 'review_error') {
+                alert('The home you are looking for does not have any reviews associated with it yet. Add a review for this home by clicking on the add review button.')
+              }
+              else if (data['success'] == 'home_error') {
+                alert('The address you submitted does not correspond to a valid home in the database. Please try again.')
+              }
+              else {
+                for (review in data) {
+                  $('#homeReviewed').append("<p>" + data[review]['address'] + "</p>");
+                  $('#rating').append("<p>" + data[review]['rating'] + "</p>");
+                  $('#review').append("<p>" + data[review]['review'] + "</p>");
+                }
               }
             }
           });

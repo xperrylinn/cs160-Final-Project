@@ -26,3 +26,6 @@ class Review(models.Model):
   home = models.ForeignKey(Home, on_delete=models.CASCADE)
   rating = models.IntegerField()
   review = models.CharField(max_length=10000)
+  
+  def __str__(self):
+    return str(self.home) + " Review"

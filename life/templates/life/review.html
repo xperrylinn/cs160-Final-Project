@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-		<title>Add Review</title>
+		<title>Review</title>
 
 		<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="{% static '/life/vendor/bootstrap/css/bootstrap.css' %}" />
@@ -16,6 +16,14 @@
 	<body>
 		<!-- Your layout here -->
     <div class="container">
+      
+      <div class="row">
+        <div class="col-12">
+           <a href="../../life/" class="btn btn-outline-secondary" aria-pressed="true">Back</a>
+        </div>
+      </div>
+      
+      <br>
       
       <!-- Row -->
       <div class="row">
@@ -64,7 +72,7 @@
       <!-- Row -->
       <div class = "row">
         <div class = "col-lg-12">
-          <a href="../../life/" class="btn btn-primary" role="submit" id="submitButton" aria-pressed="true">Submit</a>
+          <button class="btn btn-primary" id="submitButton" type="submit">Submit</button>
         </div>
       </div>
       <!-- Row -->
@@ -93,22 +101,27 @@
       
       var csrftoken = getCookie('csrftoken');
     
-//       $("#submitButton").click( function(){
-//         var postdata = {
-//           'address': document.getElementById("addressInput").value,
-//           'price': document.getElementById("priceInput").value,
-//           'landlord': document.getElementById("landlordInput").value,
-//           'csrfmiddlewaretoken': csrftoken, 
-//         };
-//         $.ajax({
-//           url: "../../life/addReview/",
-//           method: "POST",
-//           headers: { "X-CSRFToken": csrftoken},
-//           data: JSON.stringify(postdata),
-//           contentType: "application/json",
-//           dataType: "json"
-//         });
-//       });
+      $("#submitButton").click( function(){
+        var postdata = {
+          'address': document.getElementById("addressInput").value,
+          'rating': document.getElementById("ratingInput").value,
+          'review': document.getElementById("reviewInput").value,
+          'csrfmiddlewaretoken': csrftoken, 
+        };
+        $.ajax({
+          url: "../../life/review/",
+          method: "POST",
+          headers: { "X-CSRFToken": csrftoken},
+          data: JSON.stringify(postdata),
+          contentType: "application/json",
+          dataType: "json",
+          error: function(jqXHR, textStatus, errorThrown) {
+            if (errorThrown == "Bad Request") {
+              alert("The address does not exist.");
+            }
+          }
+        });
+      });
     });   
     </script> 
   </body>

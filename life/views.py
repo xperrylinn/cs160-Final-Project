@@ -26,8 +26,22 @@ def user(request):
     else:
       return render(request, 'life/user.html')
     
-# def searchPage(request):
-#     return render(request, 'life/searchPage.html')
+def review(request):
+    if request.method == "POST":
+      newReviewData = json.loads(request.body.decode('ASCII'))
+      query_address = newReviewData['address']
+      print(query_address)
+      # Check if address is valid 
+      exists = Home.objects.filter(address=query_address).exists()
+      print(exists)
+      if exists:
+        query_home = Home.objects.get(address=query_address)
+        Review(home=query_home, rating=int(newReviewData['rating']), review=newReviewData['review']).save()
+        return HttpResponse("")
+      else:
+        return HttpResponse(status=400)
+    else:
+      return render(request, 'life/review.html')
 
   
 def searchHomeQuery(request):
@@ -67,5 +81,46 @@ def searchUserQuery(request):
       }
       return JsonResponse(data)
     
-def addReview(request):
-    return render(request, 'life/addReview.html')
+def helper(review):
+    data = {
+      'success': 'true',
+      'address': review.home.address,
+      'rating': review.rating,
+      'review': review.review
+    }
+    return data
+
+def searchHomeReviewQuery(request):
+    query_address = request.GET.get('address', None)
+    home_exists = Home.objects.filter(address=query_address).exists()
+    if home_exists:
+      query_home = Home.objects.get(address=query_address)
+      review_exists = Review.objects.filter(home=query_home).exists()
+      if review_exists:
+        reviews = Review.objects.filter(home=query_home)
+        obj = {}
+        counter = 0
+        for review in reviews:
+          obj["review" + str(counter)] = helper(review)
+          counter = counter + 1
+        return JsonResponse(obj)
+      else:
+        # Review doesn't exist
+        data = {
+          'success': 'review_error'
+        }
+        return JsonResponse(data)
+    else:
+      # Home doesn't exist
+      data = {
+        'success': 'home_error'
+      }
+      return JsonResponse(data)    
+
+  
+
+  
+  
+  
+  
+  
