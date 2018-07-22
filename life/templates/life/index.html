@@ -16,17 +16,163 @@
 	<body>
 		<!-- Your layout here -->
     <div class="container">
+      
+      <!-- Header Row and Form -->
       <div class="row">
-        <div class="col-lg-4">
-          <a href="../life/home">Home</a>
+        <h2>
+          Home Search
+        </h2>
+        <!-- Column -->
+        <div class="col-12">
+          <!-- Form -->
+           <div class="form-group">
+             <input type="text" class="form-control" placeholder="Enter home address.." id="addressInput">
+          </div>
+          <!-- Form -->
         </div>
-        <div class="col-lg-4">
-          <a href="../life/user">User</a>
-        </div>
-        <div class="col-lg-4">
-          <a href="../life/searchPage">Search Users and Homes</a>
+        <!-- Column -->
+      </div>
+      <!-- Header Row and Form -->
+      
+      <!-- Home Buttons Row -->
+      <div class = "row">
+        <div class = "col-12">
+          <button type="submit" class="btn btn-primary" id="homeButton">Search</button>
+          <a href="../../life/home" class="btn btn-outline-dark" role="button" aria-pressed="true">Add Home</a>
+          <a href="../../life/addReview" class="btn btn-outline-dark" role="button" aria-pressed="true">Add Review</a>
         </div>
       </div>
-    </div>
+      <!-- Home Button Row -->
+      
+      <br>
+      
+      <!-- Home Data -->
+      <div class='row'>
+        <div class='col-3' id="address">
+          <h4>
+            Address
+          </h4>
+        </div>
+        <div class='col-3' id="price">
+          <h4>
+            Price
+          </h4>
+        </div>
+        <div class='col-3' id='landlord'>
+          <h4>
+            Landlord
+          </h4>
+        </div>
+        <div class='col-3' id='reviews'>
+          <h4>
+            Reviews
+          </h4>
+        </div>
+      </div>
+      <!-- Home Data -->
+      
+      <hr>
+      
+      <!-- User Search -->
+      <!-- Header Row and Form -->
+      <div class="row">
+        <h2>
+          User Search
+        </h2>
+        <!-- Column -->
+        <div class="col-12">
+          <!-- Form -->
+           <div class="form-group">
+             <input type="text" class="form-control" placeholder="Enter user's full name.." id="nameInput">
+          </div>
+          <!-- Form -->
+        </div>
+        <!-- Column -->
+      </div>
+      <!-- Header Row and Form -->
+      
+      <!-- User Button Row -->
+      <div class = "row">
+        <div class = "col-12">
+          <button type="submit" class="btn btn-primary" id="userButton">Search</button>
+          <a href="../../life/user" class="btn btn-outline-dark" role="button" aria-pressed="true">Add User</a>
+        </div>
+      </div>
+      <!-- User Button Row -->
+      
+      <br>
+      
+      <!-- User Data -->
+      <div class='row'>
+        <div class='col-3' id="username">
+          <h4>
+            Username
+          </h4>
+        </div>
+        <div class='col-3' id="name">
+          <h4>
+            Name
+          </h4>
+        </div>
+        <div class='col-3' id='age'>
+          <h4>
+            Age
+          </h4>
+        </div>
+        <div class='col-3' id='hometown'>
+          <h4>
+            Hometown
+          </h4>
+        </div>
+      </div>
+      <!-- User Data -->
+      <!-- User Search -->
+    <script>
+      $(document).ready(function() {
+        // Process Home Search
+        $("#homeButton").click(function() {
+          var address = $("#addressInput").val();
+          $.ajax({
+            url: '../../life/searchHomeQuery/',
+            data: {
+            'address': address
+            },
+            dataType: 'json',
+            success: function(data) {
+              if (data['success'] == 'false') {
+                alert('Home does not exists in the database. Please try again.')
+              }
+              else {      
+                $('#address').append("<p>" + data['address'] + "</p>");
+                $('#price').append("<p>" + data['price'] + "</p>");
+                $('#landlord').append("<p>" + data['landlord'] + "</p>");
+              }
+            }
+          });
+        });
+        // Process User Search
+        $("#userButton").click(function() {
+          var name = $("#nameInput").val();
+          $.ajax({
+            url: '../../life/searchUserQuery/',
+            data: {
+            'name': name
+            },
+            dataType: 'json',
+            success: function(data) {
+              if (data['success'] == 'false') {
+                alert('User does not exists in the database. Please try again.')
+              }
+              else {      
+                $('#username').append("<p>" + data['username'] + "</p>");
+                $('#name').append("<p>" + data['name'] + "</p>");
+                $('#age').append("<p>" + data['age'] + "</p>");
+                $('#hometown').append("<p>" + data['hometown'] + "</p>");
+              }
+            }
+          });
+        });
+      });
+    </script>
 	</body>
 </html>

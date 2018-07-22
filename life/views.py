@@ -26,8 +26,8 @@ def user(request):
     else:
       return render(request, 'life/user.html')
     
-def searchPage(request):
-    return render(request, 'life/searchPage.html')
+# def searchPage(request):
+#     return render(request, 'life/searchPage.html')
 
   
 def searchHomeQuery(request):
@@ -66,3 +66,6 @@ def searchUserQuery(request):
         'success': 'false'
       }
       return JsonResponse(data)
+    
+def addReview(request):
+    return render(request, 'life/addReview.html')
