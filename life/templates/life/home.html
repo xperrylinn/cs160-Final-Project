@@ -70,7 +70,7 @@
       <!-- Row -->
     </div>
     <script>
-    console.log("Hello World!");
+//     console.log("Hello World!");
     var postdata = null;
     var csrftoken = null;
       // using jQuery
@@ -91,25 +91,25 @@
         return cookieValue;
       }
       
-    var csrftoken = getCookie('csrftoken');
+      var csrftoken = getCookie('csrftoken');
     
-    $("#submitButton").click( function(){
-      var postdata = {
-        'address': document.getElementById("addressInput").value,
-        'price': document.getElementById("priceInput").value,
-        'landlord': document.getElementById("landlordInput").value,
-        'csrfmiddlewaretoken': csrftoken, 
-      };
-      console.log(postdata);
-      $.ajax({
-        url: "../../life/home/",
-        method: "POST",
-        headers: { "X-CSRFToken": csrftoken},
-        data: JSON.stringify(postdata),
-        contentType: "application/json",
-        dataType: "json"
+      $("#submitButton").click( function(){
+        var postdata = {
+          'address': document.getElementById("addressInput").value,
+          'price': document.getElementById("priceInput").value,
+          'landlord': document.getElementById("landlordInput").value,
+          'csrfmiddlewaretoken': csrftoken, 
+        };
+//         console.log(postdata);
+        $.ajax({
+          url: "../../life/home/",
+          method: "POST",
+          headers: { "X-CSRFToken": csrftoken},
+          data: JSON.stringify(postdata),
+          contentType: "application/json",
+          dataType: "json"
+        });
       });
-    });
     });
     
     

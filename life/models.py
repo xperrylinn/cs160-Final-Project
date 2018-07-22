@@ -12,7 +12,7 @@ class User(models.Model):
   hometown = models.CharField(max_length=30)
   
   def __str__(self):
-    return self.name
+    return self.username
     
 class Home(models.Model):
   address = models.CharField(max_length=50, primary_key=True)
