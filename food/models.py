@@ -7,4 +7,8 @@ class User(models.Model):
   
   def __str__(self):
     return self.username
+
+class Testing(models.Model):
+  test = models.CharField(max_length=30, primary_key=True)
+  test2 = models.CharField(max_length=30)
     

@@ -6,10 +6,11 @@ import json
 from django.http import JsonResponse
 
 def index(request):
-    all_homes = Home.objects.all()
-    all_users = User.objects.all()
-    return render(request, 'food/index.html', {"homes": all_homes, "users": all_users})
+    return render(request, 'food/index.html')
    
 def user(request):
   return render(request, 'food/user.html')
+
+def testing(request):
+  return render(request, 'food/index.html')
   
