@@ -3,4 +3,7 @@ from food.models import *
 
 # Register your models here.
 admin.site.register(User)
-admin.site.register(Testing)
+admin.site.register(Family)
+admin.site.register(FoodUser)
+admin.site.register(Timeline)
+admin.site.register(Timepoint)
